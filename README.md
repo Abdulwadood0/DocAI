@@ -216,56 +216,6 @@ Each document is divided into chunks containing:
 
 Embeddings are generated using OpenAI's embedding model and stored using the PostgreSQL `vector` type.
 
-## Project Structure
-
-```text
-DocAI/
-├── app/
-│   ├── main.py
-│   │
-│   ├── core/
-│   │   ├── config.py
-│   │   ├── security.py
-│   │   └── oauth.py
-│   │
-│   ├── db/
-│   │   ├── database.py
-│   │   └── models/
-│   │       ├── __init__.py
-│   │       ├── user.py
-│   │       ├── document.py
-│   │       ├── document_chunk.py
-│   │       ├── conversation.py
-│   │       └── message.py
-│   │
-│   ├── schemas/
-│   │   ├── auth.py
-│   │   ├── documents.py
-│   │   ├── chat.py
-│   │   ├── conversation.py
-│   │   └── message.py
-│   │
-│   ├── services/
-│   │   ├── chunking.py
-│   │   ├── embeddings.py
-│   │   ├── retrieval.py
-│   │   └── llm.py
-│   │
-│   └── api/
-│       ├── deps.py
-│       └── routes/
-│           ├── auth.py
-│           ├── documents.py
-│           ├── conversations.py
-│           └── chat.py
-│
-├── uploads/
-├── .env.example
-├── .gitignore
-├── pyproject.toml
-└── uv.lock
-```
-
 ## Tech Stack
 
 ### Backend
@@ -280,7 +230,6 @@ DocAI/
 * OpenAI API
 * OpenAI Embeddings
 * Retrieval-Augmented Generation (RAG)
-* Semantic Search
 * Vector Search
 
 ### Database
@@ -349,7 +298,6 @@ OPENAI_API_KEY=your_openai_api_key
 
 JWT_SECRET_KEY=your_secret_key
 JWT_ALGORITHM=HS256
-JWT_ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
