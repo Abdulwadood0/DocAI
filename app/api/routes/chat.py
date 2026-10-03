@@ -7,12 +7,14 @@ from db.database import SessionDep
 from db.models.conversation import Conversation
 from db.models.message import Message
 from db.models.user import User
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from schemas.chat import ChatRequest
 from services.llm import generate_answer_stream, rewrite_query
 from services.retrieval import search_similar_chunks
 from sqlmodel import select
+
+from core.limiter import limiter
 
 router = APIRouter(
     prefix="/chat",
@@ -25,7 +27,9 @@ def sse_event(event: str, data):
 
 
 @router.post("/{conversation_id}")
+@limiter.limit("5/minute")  
 def chat(
+     request: Request, 
     conversation_id: int,
     data: ChatRequest,
     session: SessionDep,

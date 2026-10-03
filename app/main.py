@@ -8,6 +8,12 @@ from api.routes.conversations import router as conversations_router
 from starlette.middleware.sessions import SessionMiddleware
 from core.config import settings
 
+from fastapi import FastAPI
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from core.limiter import limiter, rate_limit_handler
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
@@ -16,6 +22,10 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, rate_limit_handler)
+
 
 app.add_middleware(
     SessionMiddleware,
